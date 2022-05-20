@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const { User } = require("./models/user");
-const { auth } = require("./middleware/auth");
+const { auth } = require("./service/middleware/auth");
 const cors = require("cors");
 
 app.use(
@@ -20,14 +20,10 @@ app.use(cookieParser());
 
 //mongodb 사이트에서 카피한 주소 넣기
 const dbAddress =
-  "mongodb+srv://root:root@cluster0-f3nrh.mongodb.net/<dbname>?retryWrites=true&w=majority";
+  "mongodb://146.56.137.48:27017/test";
 
 mongoose
   .connect(dbAddress, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
   })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
@@ -69,6 +65,7 @@ app.post("/service/users/login", (req, res) => {
         user
           .generateToken()
           .then((user) => {
+            console.log('dd')
             res.cookie("x_auth", user.token).status(200).json({
               loginSuccess: true,
               userId: user._id,

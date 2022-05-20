@@ -17,7 +17,6 @@ const userSchema = mongoose.Schema({
     type: String,
     minLength: 5,
   },
-  image: String,
   token: {
     type: String,
   },
