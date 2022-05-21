@@ -4,18 +4,28 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
-  name: {
-    type: String,
-    maxlength: 50,
-  },
-  email: {
-    type: String,
-    trim: true,
-    unique: 1,
+  id: {
+      type: String,
+      trim: true,
+      required: true,
   },
   password: {
-    type: String,
-    minLength: 5,
+      type: String,
+      trim: true,
+      required: true,
+  },
+  name: {
+      type: String,
+      trim: true,
+      required: true,
+  },
+  phone_number: {
+      type: String,
+      trim: true,
+  },
+  email: {
+      type: String,
+      trim: true,
   },
   token: {
     type: String,
@@ -26,7 +36,7 @@ const userSchema = mongoose.Schema({
 });
 
 //save 메소드 실행 전 비밀번호를 암호화하는 로직
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
   let user = this;
 
   //model 안의 paswsword가 변환될 때만 암호화
@@ -46,8 +56,7 @@ userSchema.pre("save", function (next) {
 
 userSchema.methods.comparePassword = function (plainPassword) {
   //plainPassword를 암호화해서 현재 비밀번호와 비교
-  return bcrypt
-    .compare(plainPassword, this.password)
+  return bcrypt.compare(plainPassword, this.password)
     .then((isMatch) => isMatch)
     .catch((err) => err);
 };
@@ -55,18 +64,16 @@ userSchema.methods.comparePassword = function (plainPassword) {
 userSchema.methods.generateToken = function () {
   const token = jwt.sign(this._id.toHexString(), "secretToken");
   this.token = token;
-  return this.save()
-    .then((user) => user)
+  return this.save().then((user) => user)
     .catch((err) => err);
 };
 
 userSchema.statics.findByToken = function (token) {
   let user = this;
   //secretToken을 통해 user의 id값을 받아오고 해당 아이디를 통해
-  //Db에 접근해서 유저의 정보를 가져온다
+  //DB에 접근해서 유저의 정보를 가져온다
   return jwt.verify(token, "secretToken", function (err, decoded) {
-    return user
-      .findOne({ _id: decoded, token: token })
+    return user.findOne({ _id: decoded, token: token })
       .then((user) => user)
       .catch((err) => err);
   });

@@ -1,4 +1,4 @@
-const { User } = require("../../models/user");
+const { User } = require("../../database/models/user");
 
 let auth = (req, res, next) => {
   let token = req.cookies.x_auth;
@@ -9,8 +9,7 @@ let auth = (req, res, next) => {
       req.token = token;
       req.user = user;
       next();
-    })
-    .catch((err) => {
+    }).catch((err) => {
       throw err;
     });
 };
