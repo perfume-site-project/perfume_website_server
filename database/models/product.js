@@ -1,40 +1,25 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
-const userSchema = mongoose.Schema({
-  id: {
-      type: String,
-      trim: true,
-      required: true,
-  },
-  password: {
-      type: String,
-      trim: true,
-      required: true,
-  },
+const productSchema = mongoose.Schema({
   name: {
       type: String,
       trim: true,
       required: true,
   },
-  phone_number: {
+  price: {
+      type: Number,
+      required: true,
+  },
+  description: {
       type: String,
-      trim: true,
+      required: true,
   },
-  email: {
-      type: String,
-      trim: true,
+  image_link: {
+      type: Array,
   },
-  cart_view: {
-    type: Array,
-  },
-  recent_view: {
-    type: Array,
-  },
-  token: {
-    type: String,
+  review: {
+      type: Array,
   },
 });
 
@@ -82,6 +67,14 @@ userSchema.statics.findByToken = function (token) {
   });
 };
 
-const User = mongoose.model("User", userSchema);
+productSchema.pre('save', function (next) {
+    const user = this.user;
+    if (user != "admin") {
+        const err = new Error('Not an admin');
+        next(err);
+    } else next();
+});
 
-module.exports = { User };
+const Product = mongoose.model("Product", productSchema);
+
+module.exports = { Product };

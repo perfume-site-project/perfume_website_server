@@ -14,25 +14,25 @@ app.use(cookieParser());
 
 app.get("/", (req, res) => res.send("Hello world!!!!"));
 
-app.get("/service/hello", (req, res) => {
+app.get("/hello", (req, res) => {
   res.send("안녕하세요");
 });
 
-app.post("/service/users/register", (req, res) => {
+app.post("/users/register", (req, res) => {
   userHandling.register(req, res);
 });
 
-app.post("/service/users/login", (req, res) => {
+app.post("/users/login", (req, res) => {
   userHandling.login(req, res);
 });
 
 //auth 미들웨어를 가져온다
-app.get("/service/users/auth", auth, (req, res) => {
+app.get("/users/auth", auth, (req, res) => {
   userHandling.auth(req, res);
 });
 
 //user_id를 찾아서 db에있는 토큰값을 비워준다
-app.post("/service/users/logout", auth, (req, res) => {
+app.post("/users/logout", auth, (req, res) => {
   userHandling.logout(req, res);
 });
 
