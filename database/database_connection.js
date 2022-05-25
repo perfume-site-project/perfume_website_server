@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const databaseConnection = () => {
-    const dbAddress = " ";
+    const dbAddress = "";
 
     mongoose.connect(dbAddress, { useNewUrlParser: true, useUnifiedTopology: true })
         .then(() => console.log("MongoDB Connected"))
