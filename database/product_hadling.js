@@ -10,8 +10,6 @@ const productHandling = {
         const { main_image, sub_images } = req.files;
 
         product.image_link.main_image = host + main_image[0].filename;
-        console.log(product.image_link.main_image);
-        console.log(product.image_link.sub_images);
 
         for (let i = 0; i < sub_images.length; i++) 
             product.image_link.sub_images.push(host + sub_images[i].filename);
