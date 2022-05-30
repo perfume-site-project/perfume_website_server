@@ -8,7 +8,7 @@ const deleteUserInfo = {
               password: req.body.password,
               phone_number: req.body.phone_number,
               active: true
-            },
+            }
           });
           if (!User) {
             User.destroy({
