@@ -4,10 +4,12 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { userHandling } = require('../database/user_handling')
 const { userInformation } = require('../database/user_info')
+const { deleteUserInfo } = require('../database/deleteUserInfo')
 const { auth } = require("./middleware/auth");
 const { databaseConnection } = require("../database/database_connection");
 const cors = require("cors");
 const { userInformation } = require("../database/user_info");
+const { deleteUserInfo } = require("../database/deleteUserInfo");
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,6 +53,11 @@ app.post("/service/users/findpw", (req, res) => {
 //회원정보 수정
 app.put("/service/users/{userId}", (req, res) => {
   userInformation.update(req, res);
+});
+
+//회원 탈퇴
+app.put("/service/users/{userId}", (req, res) => {
+  deleteUserInfo.update(req, res);
 });
 
 databaseConnection();
