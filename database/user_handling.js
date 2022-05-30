@@ -1,8 +1,11 @@
 const { User } = require("./models/user");
 
 const userHandling = {
-    register: (req, res) => {
+    register: async (req, res) => {
         //post로 넘어온 데이터를 받아서 DB에 저장해준다
+        const duplicateCheck = await User.findOne({'id': req.body.id});
+        if (!duplicateCheck) {}
+        else return res.json({ success: false, error: "아이디 중복" });
         const user = new User(req.body);
         user.save((err, userInfo) => {
             if (err) return res.json({ success: false, err });

@@ -29,7 +29,6 @@ app.put("/service/users/login", (req, res) => {
   userHandling.login(req, res);
 });
 
-
 //auth 미들웨어를 가져온다
 app.get("/service/users/auth", auth, (req, res) => {
   userHandling.auth(req, res);
