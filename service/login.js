@@ -22,9 +22,14 @@ app.post("/service/users/register", (req, res) => {
   userHandling.register(req, res);
 });
 
-app.post("/service/users/login", (req, res) => {
+// app.post("/service/users/{userId}", (req, res) => {
+//   userHandling.login(req, res);
+// });
+
+app.put("/service/users/login", (req, res) => {
   userHandling.login(req, res);
 });
+
 
 //auth 미들웨어를 가져온다
 app.get("/service/users/auth", auth, (req, res) => {
@@ -34,6 +39,20 @@ app.get("/service/users/auth", auth, (req, res) => {
 //user_id를 찾아서 db에있는 토큰값을 비워준다
 app.post("/service/users/logout", auth, (req, res) => {
   userHandling.logout(req, res);
+});
+
+//id/pw 찾기
+app.post("/service/users/findid", (req, res) => {
+  userHandling.findid(req, res);
+});
+
+app.post("/service/users/findpw", (req, res) => {
+  userHandling.findpw(req, res);
+});
+
+//회원정보 수정
+app.put("/service/users/{userId}", (req, res) => {
+  userHandling.findpw(req, res);
 });
 
 databaseConnection();

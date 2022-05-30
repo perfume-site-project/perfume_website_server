@@ -60,9 +60,37 @@ const userHandling = {
                 success: true,
             });
         });
+    },
+
+    findid : (req, res) => {
+        User.findById({email: req.body.email}, (err, user) => {
+            if (err || !user) {
+                return res.json({
+                  message: "회원 정보가 없습니다.",
+                });
+                }
+        return res.json({id : req.body.id});
+        });
+    },
+
+    findpw : (req, res) => {
+        User.findById({id: req.body.id}, {email: req.body.email}, (err, user) => {
+            if (err || !user) {
+                return res.json({
+                  message: "회원 정보가 없습니다.",
+                });
+                }
+            user.compareId(req.body.id)
+            .then((isMatch) => {
+                if (!isMatch) {
+                return res.json({
+                  message: "존재하지 않는 아이디입니다.",
+                });
+            }
+        })
+        return res.json({id : req.body.password});
+        });
     }
-
-
 };
 
 module.exports = { userHandling };

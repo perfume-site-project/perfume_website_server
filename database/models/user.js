@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema({
 userSchema.pre('save', function (next) {
   let user = this;
 
-  //model 안의 paswsword가 변환될 때만 암호화
+  //model 안의 password가 변환될 때만 암호화
   if (user.isModified("password")) {
     bcrypt.genSalt(saltRounds, function (err, salt) {
       if (err) return next(err);
@@ -53,6 +53,12 @@ userSchema.pre('save', function (next) {
     next();
   }
 });
+userSchema.methods.compareId = function (plainId) {
+  //plainId를 암호화해서 현재 아이디와 비교
+  return bcrypt.compare(plainId, this.id)
+    .then((isMatch) => isMatch)
+    .catch((err) => err);
+};
 
 userSchema.methods.comparePassword = function (plainPassword) {
   //plainPassword를 암호화해서 현재 비밀번호와 비교
