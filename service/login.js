@@ -56,7 +56,7 @@ app.put("/service/users/{userId}", (req, res) => {
 });
 
 //회원 탈퇴
-app.put("/service/users/{userId}", (req, res) => {
+app.delete("/service/users/{userId}", (req, res) => {
   deleteUserInfo.update(req, res);
 });
 
