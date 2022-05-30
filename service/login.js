@@ -22,9 +22,6 @@ app.post("/service/users/register", (req, res) => {
   userHandling.register(req, res);
 });
 
-// app.post("/service/users/{userId}", (req, res) => {
-//   userHandling.login(req, res);
-// });
 
 app.put("/service/users/login", (req, res) => {
   userHandling.login(req, res);
@@ -51,9 +48,9 @@ app.post("/service/users/findpw", (req, res) => {
 });
 
 //회원정보 수정
-app.put("/service/users/{userId}", (req, res) => {
-  userHandling.findpw(req, res);
-});
+// app.put("/service/users/{userId}", (req, res) => {
+//   userHandling.findpw(req, res);
+// });
 
 databaseConnection();
 

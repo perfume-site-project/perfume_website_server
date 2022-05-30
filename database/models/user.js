@@ -27,11 +27,14 @@ const userSchema = mongoose.Schema({
       type: String,
       trim: true,
   },
+  cart_view: {
+    type: Array,
+  },
+  recent_view: {
+    type: Array,
+  },
   token: {
     type: String,
-  },
-  tokenExp: {
-    type: Number,
   },
 });
 
