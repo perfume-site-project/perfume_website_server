@@ -66,22 +66,22 @@ const userHandling = {
     },
 
     findid : (req, res) => {
-        User.findById({email: req.body.email}, (err, user) => {
+        User.findOne({email: req.body.email}, (err, user) => {
             if (err || !user) {
                 return res.json({
-                  success : fail,
+                  success : false,
                   message: "회원 정보가 없습니다.",
                 });
                 }
-        return res.json({id : req.body.id});
+        return res.json({id : user.id});
         });
     },
 
     findpw : (req, res) => {
-        User.findById({id: req.body.id}, {email: req.body.email}, (err, user) => {
+        User.findOne({id: req.body.id, email: req.body.email}, (err, user) => {
             if (err || !user) {
                 return res.json({
-                  success : fail,
+                  success : false,
                   message: "회원 정보가 없습니다.",
                 });
                 }
@@ -89,12 +89,12 @@ const userHandling = {
             .then((isMatch) => {
                 if (!isMatch) {
                 return res.json({
-                  success : fail,
+                  success : false,
                   message: "존재하지 않는 아이디입니다.",
                 });
             }
         })
-        return res.json({id : req.body.password});
+        return res.json({password : user.password});
         });
     }
 };

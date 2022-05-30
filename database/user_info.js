@@ -2,13 +2,13 @@ const { User } = require("./models/user");
 
 const userInformation = {
     update: (req, res) => {
-        User.updateOne({
+      console.log(req.user.id);
+        User.updateOne({ id : req.user.id },{
             password : req.body.password,
             name : req.body.name,
             phone_number : req.body.name
-        }, {
-            where: { id : req.body.id }  
-        })
+        }  //auth로 먼저 인증 로그인된 아이디는 바로 변경가능
+        )
         .then(user => {
             if (!user) {
                 res.send({
