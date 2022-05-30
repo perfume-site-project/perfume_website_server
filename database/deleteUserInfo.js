@@ -10,6 +10,7 @@ const deleteUserInfo = {
               active: true
             }
           });
+          
           if (!User) {
             User.destroy({
               truncate: true,
