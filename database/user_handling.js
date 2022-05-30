@@ -66,6 +66,7 @@ const userHandling = {
         User.findById({email: req.body.email}, (err, user) => {
             if (err || !user) {
                 return res.json({
+                  success : fail,
                   message: "회원 정보가 없습니다.",
                 });
                 }
@@ -77,6 +78,7 @@ const userHandling = {
         User.findById({id: req.body.id}, {email: req.body.email}, (err, user) => {
             if (err || !user) {
                 return res.json({
+                  success : fail,
                   message: "회원 정보가 없습니다.",
                 });
                 }
@@ -84,6 +86,7 @@ const userHandling = {
             .then((isMatch) => {
                 if (!isMatch) {
                 return res.json({
+                  success : fail,
                   message: "존재하지 않는 아이디입니다.",
                 });
             }
