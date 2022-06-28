@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const { loginRouteConfig } = require("./service/login");
 const { productRouteConfig } = require("./service/product");
+const { userRouteConfig } = require("./service/user");
 const { databaseConnection } = require("./database/database_connection");
 const cors = require("cors");
 
@@ -17,6 +18,7 @@ app.use(express.static('static'));
 
 loginRouteConfig(app);
 productRouteConfig(app);
+userRouteConfig(app);
 
 app.get("/", (req, res) => res.send("Hello world!!!!"));
 

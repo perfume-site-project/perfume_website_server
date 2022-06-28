@@ -1,4 +1,5 @@
 const { Product } = require('./models/product');
+const url = require('url');
 
 const host = "http://localhost:8000/images/";
 
@@ -20,7 +21,15 @@ const productHandling = {
             if (err) return res.json({ success: false, err });
             return res.status(200).json({ success: true });
         });
-    }
+    },
+    
+    find: (req, res) => {
+        const requestURL = req.url;
+        const queryData = url.parse(requestURL, true).query;
+        Product.findOne({name: queryData.name}, (err, product) => {
+            console.log(product);
+        });
+    },
 };
 
 module.exports = { productHandling };

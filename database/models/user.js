@@ -64,6 +64,10 @@ userSchema.methods.comparePassword = function (plainPassword) {
     .catch((err) => err);
 };
 
+userSchema.methods.compareId = function (id) {
+  return id == this.id;
+};
+
 userSchema.methods.generateToken = function () {
   const token = jwt.sign(this._id.toHexString(), "secretToken");
   this.token = token;

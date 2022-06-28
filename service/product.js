@@ -1,6 +1,7 @@
 const { productHandling } = require('../database/product_hadling')
 const { auth } = require("./middleware/auth");
 const multer = require('multer');
+const url = require('url');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -26,6 +27,10 @@ const fileFields = upload.fields([
 const productRouteConfig = (app) => {
     app.post("/product/upload", fileFields, auth, (req, res) => {
         productHandling.upload(req, res);
+    });
+
+    app.get("/product", (req, res) => {
+        productHandling.find(req, res);
     });
 }
 
