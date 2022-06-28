@@ -29,12 +29,19 @@ const productSchema = mongoose.Schema({
 });
 
 productSchema.pre('save', function (next) {
-    const name = this.userName;
-    if (name != "admin") {
-        const err = "Not an admin";
-        next(err);
-    } else next();
+  const name = this.userName;
+  if (name != "admin") {
+      const err = "Not an admin";
+      next(err);
+  } else next();
 });
+
+productSchema.statics.findByName = (name) => {
+  let product = this;
+  product.findOne({name: name}, (err, product) => {
+    console.log(product);
+  });
+}
 
 
 const Product = mongoose.model("Product", productSchema, "products");
