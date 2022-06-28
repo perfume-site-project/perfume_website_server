@@ -43,7 +43,6 @@ productSchema.statics.findByName = (name) => {
   });
 }
 
-
 const Product = mongoose.model("Product", productSchema, "products");
 
 module.exports = { Product };
