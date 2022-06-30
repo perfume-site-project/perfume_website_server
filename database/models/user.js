@@ -4,7 +4,7 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
-  id: {
+  email: {  // id
       type: String,
       trim: true,
       required: true,
@@ -23,9 +23,11 @@ const userSchema = mongoose.Schema({
       type: String,
       trim: true,
   },
-  email: {
+  birthday: {
+      type: Date,
+  },
+  address: {
       type: String,
-      trim: true,
   },
   cart_view: {
     type: Array,
@@ -64,8 +66,8 @@ userSchema.methods.comparePassword = function (plainPassword) {
     .catch((err) => err);
 };
 
-userSchema.methods.compareId = function (id) {
-  return id == this.id;
+userSchema.methods.compareEmail = function (email) {
+  return email == this.email;
 };
 
 userSchema.methods.generateToken = function () {
