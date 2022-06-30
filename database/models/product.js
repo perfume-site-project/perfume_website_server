@@ -15,6 +15,12 @@ const productSchema = mongoose.Schema({
       type: String,
       required: true,
   },
+  ingredient_description: {
+      type: String,
+  },
+  tasting_note: {
+      type: String,
+  },
   image_link: {
     main_image: {
       type: String,
