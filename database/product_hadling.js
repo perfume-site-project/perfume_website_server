@@ -26,8 +26,17 @@ const productHandling = {
     find: (req, res) => {
         const requestURL = req.url;
         const queryData = url.parse(requestURL, true).query;
+        console.log(queryData.name);
         Product.findOne({name: queryData.name}, (err, product) => {
-            console.log(product);
+            return res.status(200).json(product);
+        });
+    },
+
+    delete: (req, res) => {
+        const nameForDelete = req.body.name;
+        Product.deleteOne({name: nameForDelete}, (err, product) => {
+            if (err) console.log(err);
+            else return res.status(200).json({ success: true });
         });
     },
 };

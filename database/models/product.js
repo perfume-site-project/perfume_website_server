@@ -25,7 +25,7 @@ const productSchema = mongoose.Schema({
     main_image: {
       type: String,
     },
-		sub_images: {
+	  sub_images: {
       type: Array,
     }
   },

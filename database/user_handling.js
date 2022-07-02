@@ -21,7 +21,7 @@ const userHandling = {
                 });
             }
             
-            return res.json({id: user.password});
+            return res.json({password: user.password});
         });
     },
 };

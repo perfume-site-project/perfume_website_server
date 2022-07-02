@@ -32,6 +32,11 @@ const productRouteConfig = (app) => {
     app.get("/product", (req, res) => {
         productHandling.find(req, res);
     });
+
+    app.post("/product/delete", auth, (req, res) => {
+        if (req.user.name == "admin") productHandling.delete(req, res);
+        else return res.status(200).json({ success: false });
+    });
 }
 
 module.exports = { productRouteConfig };
