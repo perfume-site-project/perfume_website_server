@@ -35,7 +35,16 @@ const productRouteConfig = (app) => {
 
     app.post("/product/delete", auth, (req, res) => {
         if (req.user.name == "admin") productHandling.delete(req, res);
-        else return res.status(200).json({ success: false });
+        else return res.status(401).json({ success: false, err: "Not an admin" });
+    });
+
+    app.post("/product/update", fileFields, auth, (req, res) => {
+        if (req.user.name == "admin") productHandling.update(req, res);
+        else return res.status(401).json({ success: false, err: "Not an admin" });
+    });
+
+    app.post("/product/review", auth, (req, res) => {
+        productHandling.review(req, res);
     });
 }
 
