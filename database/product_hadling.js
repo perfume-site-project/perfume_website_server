@@ -20,7 +20,7 @@ const productHandling = {
             return res.status(200).json({ success: true });
         });
     },
-    
+
     find: (req, res) => {
         const requestURL = req.url;
         const queryData = url.parse(requestURL, true).query;
@@ -79,13 +79,13 @@ const productHandling = {
         };
 
         if (review.score > 5) return res.status(400).json({
-            success: false, err: "score is higher than 5"
+            success: false, err: "score is higher than 5",
         });
 
         Product.updateOne({ _id: productId }, {
             $push: {
                 "review": review,
-            }
+            },
         }, (err) => {
             if (err) return res.json({ success: false, err });
             return res.status(200).json({ success: true });

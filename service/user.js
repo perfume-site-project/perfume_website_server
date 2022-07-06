@@ -11,6 +11,10 @@ const userRouteConfig = (app) => {
   app.post("/users/findpw", (req, res) => {
     userHandling.findpw(req, res);
   });
+
+  app.post("/users/update", auth, (req, res) => {
+    userHandling.update(req, res);
+  });
 }
 
 module.exports = { userRouteConfig };
