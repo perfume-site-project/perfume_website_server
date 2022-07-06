@@ -43,6 +43,13 @@ const userHandling = {
             return res.status(200).json({ success: true });
         });
     },
+
+    delete: (req, res) => {
+        User.deleteOne({ email: req.user.email }, (err) => {
+            if (err) return res.json({ success: false, err });
+            return res.status(200).json({ success: true });
+        });
+    },
 };
 
 async function genBcrypt(password) {

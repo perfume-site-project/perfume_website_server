@@ -15,6 +15,10 @@ const userRouteConfig = (app) => {
   app.post("/users/update", auth, (req, res) => {
     userHandling.update(req, res);
   });
+
+  app.post("/users/delete", auth, (req, res) => {
+    userHandling.delete(req, res);
+  });
 }
 
 module.exports = { userRouteConfig };
