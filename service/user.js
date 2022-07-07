@@ -11,6 +11,18 @@ const userRouteConfig = (app) => {
   app.post("/users/findpw", (req, res) => {
     userHandling.findpw(req, res);
   });
+
+  app.get("/users/basket", (req, res) => {
+    userHandling.basket(req, res);
+  });
+  
+  app.get("/users/cartview", (req, res) => {
+    userHandling.cartview(req, res);
+  });
+
+  app.get("/users/cartview/delete", (req, res) => {
+    userHandling.delete(req, res);
+  });
 }
 
 module.exports = { userRouteConfig };

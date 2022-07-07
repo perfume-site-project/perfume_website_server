@@ -40,6 +40,7 @@ const userSchema = mongoose.Schema({
   },
 });
 
+
 //save 메소드 실행 전 비밀번호를 암호화하는 로직
 userSchema.pre('save', function (next) {
   let user = this;
@@ -89,5 +90,4 @@ userSchema.statics.findByToken = function (token) {
 };
 
 const User = mongoose.model("User", userSchema);
-
 module.exports = { User };
