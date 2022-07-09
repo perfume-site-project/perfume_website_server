@@ -19,6 +19,14 @@ const userRouteConfig = (app) => {
   app.post("/users/delete", auth, (req, res) => {
     userHandling.delete(req, res);
   });
+
+  app.post("/users/cartview", auth, (req, res) => {
+    userHandling.cartView(req, res);
+  });
+
+  app.post("/users/cartview/delete", auth, (req, res) => {
+    userHandling.cartViewDelete(req, res);
+  });
 }
 
 module.exports = { userRouteConfig };
