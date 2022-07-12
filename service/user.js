@@ -12,6 +12,10 @@ const userRouteConfig = (app) => {
     userHandling.findpw(req, res);
   });
 
+  app.get("/users/info", auth, (req, res) => {
+    userHandling.info(req, res);
+  });
+
   app.post("/users/update", auth, (req, res) => {
     userHandling.update(req, res);
   });
@@ -26,6 +30,10 @@ const userRouteConfig = (app) => {
 
   app.post("/users/cartview/delete", auth, (req, res) => {
     userHandling.cartViewDelete(req, res);
+  });
+
+  app.post("/users/purchase", auth, (req, res) => {
+    userHandling.purchase(req, res);
   });
 }
 

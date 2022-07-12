@@ -1,4 +1,5 @@
 const { User } = require("./models/user");
+const { Order } = require("./models/order");
 const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
@@ -26,6 +27,10 @@ const userHandling = {
             
             return res.json({password: user.password});
         });
+    },
+
+    info: (req, res) => {
+        return res.status(200).json(req.user);
     },
 
     update: async (req, res) => {
@@ -60,7 +65,7 @@ const userHandling = {
             }*/
             User.updateOne({ _id: req.user._id }, {
                 $push: {
-                    "cart_view": { 
+                    "cart_view": {
                         "productId": req.body.productId,
                         "count": req.body.count,
                         "cartViewId": Date.now(),
@@ -83,6 +88,27 @@ const userHandling = {
         }, (err) => {
             if (err) return res.json({ success: false, err });
                 return res.status(200).json({ success: true });
+        });
+    },
+
+    purchase: (req, res) => {
+        const order = new Order(req.body);
+
+        if ((!req.user.address && req.body.address) ||
+             (req.body.address && req.user.address != req.body.address)) {
+            User.updateOne({ email: req.user.email }, {
+                $set: {
+                    "address": req.body.address,
+                },
+            }, (err) => {
+                // if (err) return res.json({ success: false, err });
+                // return res.status(200).json({ success: true });
+            });
+        }
+
+        order.save((err) => {
+            if (err) return res.json({ success: false, err });
+            return res.status(200).json({ success: true });
         });
     },
 };
