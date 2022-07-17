@@ -61,11 +61,13 @@ const productHandling = {
     update: (req, res) => {
         const productId = req.body._id;
         let product = {
+            intro_image: "",
             main_image: "",
             sub_images: [],
         };
-        const { main_image, sub_images } = req.files;
+        const { intro_image, main_image, sub_images } = req.files;
 
+        product.intro_image = host + intro_image[0].filename;
         product.main_image = host + main_image[0].filename;
 
         for (let i = 0; i < sub_images.length; i++) 
@@ -79,6 +81,7 @@ const productHandling = {
                 "ingredient_description": req.body.ingredient_description,
                 "tasting_note": req.body.tasting_note,
                 "image_link": {
+                    "intro_image": product.intro_image,
                     "main_image": product.main_image,
                     "sub_images": product.sub_images,
                 },

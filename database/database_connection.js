@@ -7,10 +7,10 @@ const databaseConnection = () => {
             poolSize: 10,
             authSource: "",
             user: "",
-            pass: "", 
+            pass: "",
             useCreateIndex: true,
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
         })
         .then(() => console.log("MongoDB Connected"))
         .catch((err) => console.log(err));
