@@ -4,12 +4,16 @@ const url = require('url');
 const host = "http://localhost:8000/images/";
 
 const productHandling = {
-    upload: (req, res) => {
+    upload: async (req, res) => {
+        const duplicateProductNameCheck = await Product.findOne({'name': req.body.name});
+        if (duplicateProductNameCheck) return res.json({ success: false, error: "상품 이름 중복" });
+
         const product = new Product(req.body);
         product.userName = req.user.name;
         
-        const { main_image, sub_images } = req.files;
+        const { intro_image, main_image, sub_images } = req.files;
 
+        product.image_link.intro_image = host + intro_image[0].filename;
         product.image_link.main_image = host + main_image[0].filename;
 
         for (let i = 0; i < sub_images.length; i++) 
@@ -26,15 +30,24 @@ const productHandling = {
         const queryData = url.parse(requestURL, true).query;
         if (queryData.id) {
             Product.findOne({_id: queryData.id}, (err, product) => {
+                if (err) return res.json({ success: false, err });
                 return res.status(200).json(product);
             });
         } else if (queryData.name) {
             Product.findOne({name: queryData.name}, (err, product) => {
+                if (err) return res.json({ success: false, err });
                 return res.status(200).json(product);
             });
         } else {
             return res.status(400).json({ "success": false });
         }
+    },
+
+    findAll: (req, res) => {
+        Product.find({}, (err, product) => {
+            if (err) return res.json({ success: false, err });
+            return res.status(200).json(product);
+        });
     },
 
     delete: (req, res) => {
@@ -80,7 +93,7 @@ const productHandling = {
         const productId = req.body._id;
         const review = {
             id: req.user.name,
-            date: Date.now(),
+            date: new Date(),
             title: req.body.title,
             content: req.body.content,
             score: Number(req.body.score),

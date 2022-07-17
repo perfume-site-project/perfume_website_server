@@ -3,10 +3,14 @@ const { User } = require("./models/user");
 const loginHandling = {
     register: async (req, res) => {
         //post로 넘어온 데이터를 받아서 DB에 저장해준다
-        const duplicateCheck = await User.findOne({'email': req.body.email});
-        if (!duplicateCheck) {}
-        else return res.json({ success: false, error: "이메일 중복" });
-        // req.body.birthday = new Date("2016-05-18T16:00:00Z");
+        const duplicateEmailCheck = await User.findOne({'email': req.body.email});
+        if (duplicateEmailCheck) return res.json({ success: false, error: "이메일 중복" });
+        const duplicateNameCheck = await User.findOne({'name': req.body.name});
+        if (duplicateNameCheck) return res.json({ success: false, error: "이름 중복" });
+        const duplicatePhoneNumberCheck = await User.findOne({'phone_number': req.body.phone_number});
+        if (duplicatePhoneNumberCheck) return res.json({ success: false, error: "전화번호 중복" });
+        req.body.birthday = new Date(req.body.birthday);
+        console.log(req.body.birthday);
         const user = new User(req.body);
         user.save((err, userInfo) => {
             if (err) return res.json({ success: false, err });

@@ -19,6 +19,7 @@ const upload = multer({
 });
 
 const fileFields = upload.fields([
+    {name: 'intro_image', maxCount: 1},
     {name: 'main_image', maxCount: 1},
     {name: 'sub_images', maxCount: 8},
 ]);
@@ -31,6 +32,10 @@ const productRouteConfig = (app) => {
 
     app.get("/product", (req, res) => {
         productHandling.find(req, res);
+    });
+
+    app.get("/allproduct", (req, res) => {
+        productHandling.findAll(req, res);
     });
 
     app.post("/product/delete", auth, (req, res) => {

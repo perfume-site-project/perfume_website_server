@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const databaseConnection = () => {
     const dbAddress = "";
 
-    mongoose.connect(dbAddress, { 
+    mongoose.connect(dbAddress, {
             poolSize: 10,
             authSource: "",
             user: "",
