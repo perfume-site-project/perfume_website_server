@@ -66,28 +66,37 @@ const productHandling = {
         }
     },
 
-    update: (req, res) => {
+    update: async (req, res) => {
+        let currentProduct;
         const productId = req.body._id;
+
+        currentProduct = await Product.findOne({_id: productId});
+        if (!currentProduct) return res.json({ success: false });
+
         let product = {
-            intro_image: "",
-            main_image: "",
-            sub_images: [],
+            intro_image: currentProduct.image_link.intro_image,
+            main_image: currentProduct.image_link.main_image,
+            sub_images: currentProduct.image_link.sub_images,
         };
         const { intro_image, main_image, sub_images } = req.files;
 
-        product.intro_image = host + intro_image[0].filename;
-        product.main_image = host + main_image[0].filename;
+        if (intro_image) product.intro_image = host + intro_image[0].filename;
+        if (main_image) product.main_image = host + main_image[0].filename;
 
-        for (let i = 0; i < sub_images.length; i++) 
-            product.sub_images.push(host + sub_images[i].filename);
+        if (sub_images) {
+            product.sub_images = [];
+            for (let i = 0; i < sub_images.length; i++) 
+                product.sub_images.push(host + sub_images[i].filename);
+        }
 
         Product.updateOne({ _id: productId }, {
             $set: {
-                "name": req.body.name,
-                "price": req.body.price,
-                "description": req.body.description,
-                "ingredient_description": req.body.ingredient_description,
-                "tasting_note": req.body.tasting_note,
+                "name": req.body.name ? req.body.name : currentProduct.name,
+                "price": req.body.price ? req.body.price : currentProduct.price,
+                "description": req.body.description ? req.body.description : currentProduct.description,
+                "ingredient_description": req.body.ingredient_description ? 
+                                    req.body.ingredient_description : currentProduct.ingredient_description,
+                "tasting_note": req.body.tasting_note ? req.body.tasting_note : currentProduct.tasting_note,
                 "image_link": {
                     "intro_image": product.intro_image,
                     "main_image": product.main_image,
