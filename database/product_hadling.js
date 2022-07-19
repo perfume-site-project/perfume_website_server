@@ -51,11 +51,19 @@ const productHandling = {
     },
 
     delete: (req, res) => {
-        const nameForDelete = req.body.name;
-        Product.deleteOne({name: nameForDelete}, (err, product) => {
-            if (err) console.log(err);
-            else return res.status(200).json({ success: true });
-        });
+        if (req.body._id) {
+            const idForDelete = req.body._id;
+            Product.deleteOne({_id: idForDelete}, (err, product) => {
+                if (err) console.log(err);
+                else return res.status(200).json({ success: true });
+            });
+        } else if (req.body.name) {
+            const nameForDelete = req.body.name;
+            Product.deleteOne({name: nameForDelete}, (err, product) => {
+                if (err) console.log(err);
+                else return res.status(200).json({ success: true });
+            });
+        }
     },
 
     update: (req, res) => {
