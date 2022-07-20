@@ -57,7 +57,7 @@ const userHandling = {
     },
 
     cartView: async (req, res) => {
-        User.findOne({ _id: req.user._id }, (err, user) => {
+        User.findOne({ _id: req.user._id }, async (err, user) => {
             if (err) return res.json({ success: false, err });
 
             selectedProduct = await Product.findOne({_id: req.body.productId});
