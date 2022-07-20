@@ -69,6 +69,7 @@ const userHandling = {
                     "cart_view": {
                         "productId": req.body.productId,
                         "productImage": selectedProduct.image_link.main_image,
+                        "name": selectedProduct.name,
                         "count": req.body.count,
                         "price": selectedProduct.price * req.body.count,
                         "cartViewId": Date.now(),
