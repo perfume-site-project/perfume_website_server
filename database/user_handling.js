@@ -1,5 +1,6 @@
 const { User } = require("./models/user");
 const { Order } = require("./models/order");
+const { Product } = require("./models/product");
 const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
