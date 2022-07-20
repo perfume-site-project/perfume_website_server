@@ -16,6 +16,16 @@ const orderSchema = mongoose.Schema({
       trim: true,
       required: true,
   },
+  receiver: {
+      type: String,
+      trim: true,
+      required: true,
+  },
+  receiver_phone_number: {
+      type: String,
+      trim: true,
+      required: true,
+  },
   phone_number: {
       type: String,
       trim: true,
