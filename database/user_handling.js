@@ -56,18 +56,20 @@ const userHandling = {
         });
     },
 
-    cartView: (req, res) => {
+    cartView: async (req, res) => {
         User.findOne({ _id: req.user._id }, (err, user) => {
             if (err) return res.json({ success: false, err });
-            /*if (user.cart_view.includes(req.body.productId)) {
-                err = "There are duplicates";
-                return res.json({ success: false, err });
-            }*/
+
+            selectedProduct = await Product.findOne({_id: req.body.productId});
+            if (!selectedProduct) return res.json({ success: false });
+
             User.updateOne({ _id: req.user._id }, {
                 $push: {
                     "cart_view": {
                         "productId": req.body.productId,
+                        "productImage": selectedProduct.image_link.main_image,
                         "count": req.body.count,
+                        "price": selectedProduct.price * req.body.count,
                         "cartViewId": Date.now(),
                     },
                 },
