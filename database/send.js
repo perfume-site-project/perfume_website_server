@@ -1,5 +1,6 @@
 const axios = require('axios');
 const CryptoJS = require('crypto-js');
+require("dotenv").config();
 
 // Using NAVER Cloud Platform SMS Service
 
@@ -14,9 +15,8 @@ const newLine = "\n";
 const timestamp = Date.now().toString();
 const url = `/sms/v2/services/${serviceId}/messages`;
 
-
 const makeSignature = () => {
-    var hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
+    let hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
 	hmac.update(method);
 	hmac.update(space);
 	hmac.update(url);
@@ -51,9 +51,9 @@ const sendMessage = async (user_phone_number, message) => {
     }).then(res => {
         console.log(res.data);
     })
-        .catch(err => {
-            console.log(err);
-        })
+    .catch(err => {
+        console.log(err);
+    });
     return 400;
 }
 
