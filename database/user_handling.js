@@ -1,6 +1,7 @@
 const { User } = require("./models/user");
 const { Order } = require("./models/order");
 const { Product } = require("./models/product");
+const sendMessage = require("./send");
 const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
@@ -18,16 +19,43 @@ const userHandling = {
         });
     },
 
-    findpw: (req, res) => {
-        User.findOne({email: req.body.email}, (err, user) => {
-            if (err || !user) {
-                return res.json({
-                    message: "회원 정보가 없습니다.",
-                });
+    findpw: async (req, res) => {
+        const randomNumber = Math.floor(Math.random() * 1000000).toString();
+        const currentUser = await User.findOne({ email: req.body.email });
+
+        if (!currentUser) return res.status(400).json({ success: false });
+        if (currentUser.phone_number != req.body.phone_number) 
+            return res.status(400).json({ success: false, err: "not permitted phone number" });
+
+        User.updateOne({ email: req.body.email }, {
+            $set: {
+                "code": randomNumber,
+            },
+        }, (err) => {
+            if (err) return res.json({ success: false, err });
+            else {
+                sendMessage(req.body.phone_number, randomNumber);
+                return res.status(200).json({ success: true });
             }
-            
-            return res.json({password: user.password});
         });
+    },
+
+    findpwcode: async (req, res) => {
+        const receivedCode = req.body.code;
+        const currentUser = await User.findOne({ email: req.body.email });
+
+        if (!currentUser) return res.status(400).json({ success: false });
+        if (currentUser.code == receivedCode) {
+            req.body.password = await genBcrypt(req.body.password);
+            User.updateOne({ email: req.body.email }, {
+                $set: {
+                    "password": req.body.password,
+                },
+            }, (err) => {
+                if (err) return res.json({ success: false, err });
+                else return res.status(200).json({ success: true });
+            });
+        } else return res.status(400).json({ success: false, err: "code is not matched." });
     },
 
     info: (req, res) => {

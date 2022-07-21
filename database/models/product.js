@@ -21,6 +21,9 @@ const productSchema = mongoose.Schema({
   tasting_note: {
       type: String,
   },
+  type : {
+      type: String,
+  },
   image_link: {
     intro_image: {
       type: String,

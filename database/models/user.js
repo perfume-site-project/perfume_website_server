@@ -39,6 +39,9 @@ const userSchema = mongoose.Schema({
   token: {
     type: String,
   },
+  code: {
+    type: String,
+  },
 });
 
 //save 메소드 실행 전 비밀번호를 암호화하는 로직

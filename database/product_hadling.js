@@ -97,6 +97,7 @@ const productHandling = {
                 "ingredient_description": req.body.ingredient_description ? 
                                     req.body.ingredient_description : currentProduct.ingredient_description,
                 "tasting_note": req.body.tasting_note ? req.body.tasting_note : currentProduct.tasting_note,
+                "type": req.body.type ? req.body.type : currentProduct.type,
                 "image_link": {
                     "intro_image": product.intro_image,
                     "main_image": product.main_image,
