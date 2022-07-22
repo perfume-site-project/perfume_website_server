@@ -49,9 +49,9 @@ const userHandling = {
 
         if (!currentUser) return res.status(400).json({ success: false });
         if (currentUser.code == receivedCode) 
-            return res.status(400).json({ codeAuth: true });
+            return res.status(200).json({ codeAuth: true });
         else 
-            return res.status(400).json({ codeAuth: false, err: "code is not matched." });
+            return res.status(200).json({ codeAuth: false, err: "code is not matched." });
     },
 
     resetpw: async (req, res) => {
