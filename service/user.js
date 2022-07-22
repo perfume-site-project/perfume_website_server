@@ -14,7 +14,11 @@ const userRouteConfig = (app) => {
 
   app.post("/users/findpwcode", (req, res) => {
     userHandling.findpwcode(req, res);
-  })
+  });
+
+  app.post("/users/resetpw", (req, res) => {
+    userHandling.resetpw(req, res);
+  });
 
   app.get("/users/info", auth, (req, res) => {
     userHandling.info(req, res);

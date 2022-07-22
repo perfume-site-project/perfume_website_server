@@ -24,6 +24,9 @@ const userHandling = {
         const currentUser = await User.findOne({ email: req.body.email });
 
         if (!currentUser) return res.status(400).json({ success: false });
+        currentUser.phone_number = currentUser.phone_number.replace(/\-/g, "");
+        req.body.phone_number = req.body.phone_number.replace(/\-/g, "");
+        console.log(currentUser.phone_number, req.body.phone_number);
         if (currentUser.phone_number != req.body.phone_number) 
             return res.status(400).json({ success: false, err: "not permitted phone number" });
 
@@ -41,6 +44,17 @@ const userHandling = {
     },
 
     findpwcode: async (req, res) => {
+        const receivedCode = req.body.code;
+        const currentUser = await User.findOne({ email: req.body.email });
+
+        if (!currentUser) return res.status(400).json({ success: false });
+        if (currentUser.code == receivedCode) 
+            return res.status(400).json({ codeAuth: true });
+        else 
+            return res.status(400).json({ codeAuth: false, err: "code is not matched." });
+    },
+
+    resetpw: async (req, res) => {
         const receivedCode = req.body.code;
         const currentUser = await User.findOne({ email: req.body.email });
 
